@@ -1,0 +1,11 @@
+.foo {
+    color: red;
+    border-color: red blue green orange
+}
+html[dir="ltr"] .foo {
+    left: 10px
+}
+html[dir="rtl"] .foo {
+    border-color: red orange green blue;
+    right: 10px
+}

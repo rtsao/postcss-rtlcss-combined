@@ -1,0 +1,33 @@
+{
+  "name": "postcss-rtlcss-combined",
+  "version": "0.0.0",
+  "description": "PostCSS plugin that creates a combined LTR/RTL stylesheet",
+  "keywords": [
+    "postcss",
+    "css",
+    "postcss-plugin",
+    "rtl",
+    "rtlcss"
+  ],
+  "author": "Ryan Tsao <ryan.j.tsao@gmail.com>",
+  "license": "MIT",
+  "repository": "rtsao/postcss-rtlcss-combined",
+  "bugs": {
+    "url": "https://github.com/rtsao/postcss-rtlcss-combined/issues"
+  },
+  "homepage": "https://github.com/rtsao/postcss-rtlcss-combined",
+  "dependencies": {
+    "loot-diff": "^1.0.1",
+    "null-prune": "^1.0.3",
+    "postcss": "^5.0.10",
+    "postcss-js": "^0.1.0",
+    "rtlcss": "^1.7.2"
+  },
+  "devDependencies": {
+    "ava": "^0.7.0",
+    "eslint": "^1.10.2"
+  },
+  "scripts": {
+    "test": "ava && eslint test/*.js"
+  }
+}
