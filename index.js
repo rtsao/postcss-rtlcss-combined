@@ -7,13 +7,12 @@ var prune = require('null-prune');
 var differ = require('loot-diff');
 var dedupe = require('./dedupe-keys');
 
-var prefixDir = postcss.plugin('postcss-remove', function (opts) {
-    opts = opts || {
-        dir: 'ltr'
-    };
+var prefixDir = postcss.plugin('postcss-dir-prefix', function (opts) {
+    opts = opts || {};
     return function (css) {
         css.walkRules(function (rule) {
-            rule.selector = 'html[dir="' + opts.dir + '"] ' + rule.selector;
+            var dirVal = opts.dir ? '="' + opts.dir + '"' : '';
+            rule.selector = 'html[dir' + dirVal + '] ' + rule.selector;
         });
     };
 });
@@ -35,7 +34,7 @@ module.exports = postcss.plugin('postcss-rtlcss-combined', function (opts) {
         var bothAndLtrOverridable = differ(ltrNonOverridable, ltr);
 
         var sources = [
-            { src: bothAndLtrOverridable },
+            { src: bothAndLtrOverridable, plugin: prefixDir },
             { src: ltrNonOverridable, plugin: prefixDir({ dir: 'ltr' }) },
             { src: rtlOnly, plugin: prefixDir({ dir: 'rtl' }) }
         ];

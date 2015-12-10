@@ -15,7 +15,7 @@
 ```
 
 ```css
-.foo {
+html[dir] .foo {
     color: red;
     border-color: red blue green orange
 }
