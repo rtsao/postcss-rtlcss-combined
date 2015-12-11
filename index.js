@@ -11,6 +11,7 @@ var prefixDir = postcss.plugin('postcss-dir-prefix', function (opts) {
     opts = opts || {};
     return function (css) {
         css.walkRules(function (rule) {
+            rule._originalSelector = rule.selector;
             var dirVal = opts.dir ? '="' + opts.dir + '"' : '';
             rule.selector = 'html[dir' + dirVal + '] ' + rule.selector;
         });
@@ -18,6 +19,7 @@ var prefixDir = postcss.plugin('postcss-dir-prefix', function (opts) {
 });
 
 module.exports = postcss.plugin('postcss-rtlcss-combined', function (opts) {
+
     opts = opts || {};
 
     var rtlify = postcssJs.sync([ rtlcss() ]);
@@ -46,10 +48,28 @@ module.exports = postcss.plugin('postcss-rtlcss-combined', function (opts) {
 
         return new Promise(function (resolve) {
             Promise.all(res).then(function (values) {
+
+                // console.log(values);
                 result.root = postcss.root();
+                var nodesBySelector = {};
+
                 values.forEach(function (v) {
-                    result.root.append(v.root);
+                    v.root.nodes.forEach(function(n) {
+                        if (!nodesBySelector[n._originalSelector]) {
+                            nodesBySelector[n._originalSelector] = [];
+                        }
+                        nodesBySelector[n._originalSelector].push(n);
+                    });
                 });
+
+                Object.keys(nodesBySelector).forEach(function(selector) {
+                    nodesBySelector[selector].forEach(function(node) {
+                        if (node.nodes.length) {
+                            result.root.append(node);
+                        }
+                    });
+                });
+
                 resolve();
             });
         });

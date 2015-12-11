@@ -1,0 +1,13 @@
+html[dir] body h1:last-child {
+    border-style: dashed dotted solid double;
+    border-color: red green blue black;
+    border-width: 1px 2px 3px 4px
+}
+html[dir="rtl"] body h1:last-child {
+    border-style: dashed double solid dotted;
+    border-color: red black blue green;
+    border-width: 1px 4px 3px 2px
+}
+html[dir] div h1:first-child {
+    border-color: green
+}

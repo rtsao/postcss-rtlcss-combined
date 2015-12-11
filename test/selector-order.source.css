@@ -1,0 +1,8 @@
+body h1:last-child {
+    border-style: dashed dotted solid double;
+    border-color: red green blue black;
+    border-width: 1px 2px 3px 4px
+}
+div h1:first-child {
+    border-color: green
+}

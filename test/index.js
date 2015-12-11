@@ -12,9 +12,15 @@ function run(t, input, output, opts = { }) {
         });
 }
 
-var source = fs.readFileSync('./basic.source.css', 'utf8');
-var expected = fs.readFileSync('./basic.expected.css', 'utf8').trim();
+function testFromFixture(name) {
+    var source = fs.readFileSync('./' + name + '.source.css', 'utf8');
+    var expected = fs.readFileSync('./' + name + '.expected.css', 'utf8')
+      .trim();
 
-test('basic functionality', t => {
-    return run(t, source, expected, { });
-});
+    test(name, t => {
+        return run(t, source, expected, { });
+    });
+}
+
+['basic', 'selector-order'].forEach(testFromFixture);
+
