@@ -22,5 +22,5 @@ function testFromFixture(name) {
     });
 }
 
-['basic', 'selector-order'].forEach(testFromFixture);
+['basic', 'selector-order', 'multiple-selectors'].forEach(testFromFixture);
 

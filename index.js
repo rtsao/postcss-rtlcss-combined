@@ -12,8 +12,11 @@ var prefixDir = postcss.plugin('postcss-dir-prefix', function (opts) {
     return function (css) {
         css.walkRules(function (rule) {
             rule._originalSelector = rule.selector;
+
             var dirVal = opts.dir ? '="' + opts.dir + '"' : '';
-            rule.selector = 'html[dir' + dirVal + '] ' + rule.selector;
+            rule.selectors = rule.selectors.map(function(selector) {
+                return 'html[dir' + dirVal + '] ' + selector;
+            });
         });
     };
 });
@@ -49,7 +52,6 @@ module.exports = postcss.plugin('postcss-rtlcss-combined', function (opts) {
         return new Promise(function (resolve) {
             Promise.all(res).then(function (values) {
 
-                // console.log(values);
                 result.root = postcss.root();
                 var nodesBySelector = {};
 
