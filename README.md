@@ -1,6 +1,6 @@
 # PostCSS-RTLCSS-Combined [![Build Status][ci-img]][ci]
 
-[PostCSS] plugin that creates a combined LTR/RTL stylesheet
+[PostCSS] plugin that creates a combined LTR/RTL stylesheet. Powered by [rtlcss](https://github.com/MohammadYounes/rtlcss).
 
 [PostCSS]: https://github.com/postcss/postcss
 [ci-img]:  https://travis-ci.org/rtsao/postcss-rtlcss-combined.svg
