@@ -13,7 +13,9 @@ var prefixDir = postcss.plugin('postcss-remove', function (opts) {
     };
     return function (css) {
         css.walkRules(function (rule) {
-            rule.selector = 'html[dir="' + opts.dir + '"] ' + rule.selector;
+            rule.selectors = rule.selectors.map(function (selector) {
+                return 'html[dir="' + opts.dir + '"] ' + selector;
+            });
         });
     };
 });
