@@ -13,7 +13,11 @@ var prefixDir = postcss.plugin('postcss-remove', function (opts) {
     };
     return function (css) {
         css.walkRules(function (rule) {
-            rule.selector = 'html[dir="' + opts.dir + '"] ' + rule.selector;
+            if(rule.nodes.length) {
+                rule.selector = 'html[dir="' + opts.dir + '"] ' + rule.selector;
+            } else {
+                rule.remove();
+            }
         });
     };
 });
