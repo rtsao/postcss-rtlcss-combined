@@ -22,6 +22,13 @@ function testFromFixture(name) {
     });
 }
 
-['basic', 'selector-order', 'multiple-selectors',
- 'ltr-only', 'rtl-only'].forEach(testFromFixture);
+var tests = [
+    'basic',
+    'selector-order',
+    'multiple-selectors',
+    'html-selector-merge',
+    'ltr-only',
+    'rtl-only'
+];
 
+tests.forEach(testFromFixture);

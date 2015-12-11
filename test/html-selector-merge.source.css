@@ -1,0 +1,5 @@
+html[lang="en"] .foo {
+    color: red;
+    left: 10px;
+    border-color: red blue green orange
+}
