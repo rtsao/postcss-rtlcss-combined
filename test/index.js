@@ -26,7 +26,9 @@ var tests = [
     'basic',
     'selector-order',
     'multiple-selectors',
-    'html-selector-merge'
+    'html-selector-merge',
+    'ltr-only',
+    'rtl-only'
 ];
 
 tests.forEach(testFromFixture);

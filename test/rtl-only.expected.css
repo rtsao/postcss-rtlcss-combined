@@ -1,0 +1,6 @@
+html[dir="ltr"] div {
+    right: 1px
+}
+html[dir="rtl"] div {
+    left: 1px
+}

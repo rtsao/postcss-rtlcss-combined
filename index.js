@@ -56,15 +56,19 @@ module.exports = postcss.plugin('postcss-rtlcss-combined', function (opts) {
 
         var ltrOnly = differ(rtl, ltr);
         var rtlOnly = differ(ltr, rtl);
-
-        var ltrNonOverridable = dedupe(prune(ltrOnly), prune(rtlOnly));
-        var bothAndLtrOverridable = differ(ltrNonOverridable, ltr);
-
-        var sources = [
-            { src: bothAndLtrOverridable, plugin: prefixDir },
-            { src: ltrNonOverridable, plugin: prefixDir({ dir: 'ltr' }) },
-            { src: rtlOnly, plugin: prefixDir({ dir: 'rtl' }) }
-        ];
+        
+        var sources = [];
+        if (ltrOnly == null) {
+            sources.push({ src: ltr, plugin: prefixDir });            
+        } else {
+            var ltrNonOverridable = dedupe(prune(ltrOnly), prune(rtlOnly));
+            var bothAndLtrOverridable = differ(ltrNonOverridable, ltr);
+            
+            if(bothAndLtrOverridable != null)
+                sources.push({ src: bothAndLtrOverridable, plugin: prefixDir });
+            sources.push({ src: ltrNonOverridable, plugin: prefixDir({ dir: 'ltr' }) });
+            sources.push({ src: rtlOnly, plugin: prefixDir({ dir: 'rtl' }) });
+        }
 
         var res = sources.map(function (obj) {
             return postcss(obj.plugin ? [obj.plugin] : [])
