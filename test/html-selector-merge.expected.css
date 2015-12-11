@@ -1,0 +1,11 @@
+html[dir][lang="en"] .foo {
+    color: red;
+    border-color: red blue green orange
+}
+html[dir="ltr"][lang="en"] .foo {
+    left: 10px
+}
+html[dir="rtl"][lang="en"] .foo {
+    border-color: red orange green blue;
+    right: 10px
+}

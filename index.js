@@ -1,5 +1,6 @@
 var postcss = require('postcss');
 var postcssJs = require('postcss-js');
+var selectorParser = require('postcss-selector-parser');
 
 var rtlcss = require('rtlcss');
 
@@ -9,13 +10,31 @@ var dedupe = require('./dedupe-keys');
 
 var prefixDir = postcss.plugin('postcss-dir-prefix', function (opts) {
     opts = opts || {};
+
+    var dirSelector = selectorParser.attribute({
+        attribute: 'dir',
+        operator: opts.dir && '=',
+        value: opts.dir && '"' + opts.dir + '"'
+    });
+
+    function addDir(selector) {
+        if (hasHtmlSelectorPrefix(selector)) {
+            selector.first.insertAfter(selector.first.nodes[0], dirSelector);
+        } else {
+            selector.first.nodes = [
+                selectorParser.tag({value: 'html'}),
+                dirSelector,
+                selectorParser.combinator({value: ' '}),
+            ].concat(selector.first.nodes);
+        }
+    };
+
     return function (css) {
         css.walkRules(function (rule) {
             if (rule.nodes.length) {
                 rule._originalSelector = rule.selector;
-                var dirVal = opts.dir ? '="' + opts.dir + '"' : '';
                 rule.selectors = rule.selectors.map(function(selector) {
-                    return 'html[dir' + dirVal + '] ' + selector;
+                    return selectorParser(addDir).process(selector).result;
                 });
             } else {
                 rule.remove();
@@ -78,3 +97,10 @@ module.exports = postcss.plugin('postcss-rtlcss-combined', function (opts) {
         });
     };
 });
+
+function hasHtmlSelectorPrefix(selector) {
+    return selector.first
+        && selector.first.nodes[0]
+        && selector.first.nodes[0].type === 'tag'
+        && selector.first.nodes[0].value === 'html';
+}
